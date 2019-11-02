@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>book list project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-6">
+                <nav class="navbar navbar-dark bg-dark mb-3">
+            <a href="" class="navbar-brand ">Book List project</a>
+                </nav>
+                <form action="" class="mb-3" id="form-book">
+            <div class="form-group">
+                <label for="">Title</label>
+                <input type="text" class="form-control" placeholder="Enter Book Title" id="title" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="">Author</label>
+                <input type="text" class="form-control" placeholder="Enter Book Author" id="author" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="">ISBN</label>
+                <input type="text" class="form-control" class="Enter ISBN Number" id="isbn" autocomplete="off">
+            </div>
+            <input type="submit" class="btn btn-info btn-block p-2">
+                </form>
+            </div>
+            <div class="col-6">
+            <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <td>Title</td>
+                    <td>Author</td>
+                    <td>ISBN</td>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+               
+            </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
