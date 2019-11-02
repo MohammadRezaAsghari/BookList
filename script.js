@@ -1,3 +1,8 @@
+//global values;
+const title = document.getElementById('title');
+const author = document.getElementById('author');
+const isbn = document.getElementById('isbn');
+const form = document.getElementById('form-book');
 //Book Constructor
 function Book(title , author , isbn){
     this.title = title;
@@ -9,6 +14,8 @@ function Book(title , author , isbn){
 function UI(){}
 
 //UI() methods:
+
+//addbook()
 UI.prototype.addBoook = function(book){
     const tbody = document.getElementById('tbody');
     const tr = document.createElement('tr');
@@ -19,25 +26,43 @@ UI.prototype.addBoook = function(book){
     <td>X</td>`
     tbody.appendChild(tr);
 }
+//clearFields
+UI.prototype.clearFields = function() {
+    title.value = '';
+    author.value = '';
+    isbn.value = '';
+}
+//showAlert();
+UI.prototype.showAlert = function(msg , alertType){
+    let container = document.querySelector('.container');
+    let alertEl = document.createElement('div');
+    alertEl.className = `alert alert-${alertType}`;
+    alertEl.textContent = msg;
+    container.insertBefore(alertEl , form);
+    setTimeout(function(){
+        document.querySelector('.alert').remove();
+    } , 3000);
+}
 
 
 //Event Listenres
-document.getElementById('form-book').addEventListener('submit' , function(e){
+form.addEventListener('submit' , function(e){
     e.preventDefault();
     
-    //get key elements
-    const title = document.getElementById('title');
-    const author = document.getElementById('author');
-    const isbn = document.getElementById('isbn');
-
     //instanciate book 
     let book = new Book(title.value , author.value , isbn.value);
     //instanciate ui
     let ui = new UI();
 
+    if(title.value !== '' && author.value !=='' && isbn.value !==''){
     //add book to user interface
     ui.addBoook(book);
-
+    ui.clearFields();
+    }
+    else{    
+        ui.showAlert('Please Fill Out All Fields' , 'danger');
+    }
+    
     
 
 
