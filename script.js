@@ -16,11 +16,14 @@ function Book(title, author, isbn) {
 
 function SaveLocal() {};
 
-//saveLocal() methods:
+//--------------saveLocal() methods:
 
+//saveDataOnLocalStorage()
 SaveLocal.prototype.saveDataOnLocalStorage = function(arrofObject) {
     localStorage.setItem('books', JSON.stringify(arrofObject));
 }
+
+//getDataFromLocalStorage()
 SaveLocal.prototype.getDataFromLocalStorage = function(key) {
     if (localStorage.getItem(key) !== null) {
         console.log(JSON.parse(localStorage.getItem(key)));
@@ -29,14 +32,28 @@ SaveLocal.prototype.getDataFromLocalStorage = function(key) {
         return []
     }
 }
+//renderElementsFromLocal
+SaveLocal.prototype.renderElementsFromLocal = function(arrayOfBook){
+    arrayOfBook.forEach(function (item , indx) {    
+        const tr = document.createElement('tr');
+        tr.innerHTML = 
+        `<td>${item.title}</td>
+        <td>${item.author}</td>
+        <td>${item.isbn}</td>
+        <td class="btn-remove">&times;</td>
+        <span class="progress"></span>`;
+        tbody.appendChild(tr);
+    });
+}
 let savelocal = new SaveLocal();
 const bookList = savelocal.getDataFromLocalStorage('books');
+savelocal.renderElementsFromLocal(bookList);
 
 
 //--------------UI constructor
 function UI() {};
 
-//UI() methods:
+//--------------UI methods:
 
 //addbook()
 UI.prototype.addBoook = function(book) {
@@ -50,13 +67,13 @@ UI.prototype.addBoook = function(book) {
         <span class="progress"></span>`
         tbody.appendChild(tr);
     }
-    //clearFields
+//clearFields
 UI.prototype.clearFields = function() {
         title.value = '';
         author.value = '';
         isbn.value = '';
     }
-    //showAlert();
+//showAlert();
 UI.prototype.showAlert = function(msg, alertType) {
     let container = document.querySelector('.container');
     let alertEl = document.createElement('div');
@@ -67,9 +84,7 @@ UI.prototype.showAlert = function(msg, alertType) {
         document.querySelector('.alert').remove();
     }, 3000);
 }
-
 //removeElement function
-
 UI.prototype.removeElement = function(target) {
     console.log('inside timeout')
     target.parentElement.classList.add('hoverAnimated');
