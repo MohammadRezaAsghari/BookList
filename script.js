@@ -32,6 +32,17 @@ SaveLocal.prototype.getDataFromLocalStorage = function(key) {
         return []
     }
 }
+//removeDataFromLocalStorage
+SaveLocal.prototype.removeDataFromLocalStorage = function(node , savelocal) {
+
+    bookList.forEach(function (item , indx) {
+        if(item.title === node.firstChild.textContent){
+            bookList.splice(indx , 1);
+            savelocal.saveDataOnLocalStorage(bookList);
+        }
+    });
+    console.log(node.firstChild.textContent);
+}
 //renderElementsFromLocal
 SaveLocal.prototype.renderElementsFromLocal = function(arrayOfBook){
     arrayOfBook.forEach(function (item , indx) {    
@@ -125,6 +136,8 @@ form.addEventListener('submit', function(e) {
 tbody.addEventListener('click', function(e) {
     if (e.target.classList.contains('btn-remove')) {
         let ui = new UI();
+        let savelocal = new SaveLocal();
+        savelocal.removeDataFromLocalStorage(e.target.parentElement , savelocal);
         ui.removeElement(e.target);
         ui.showAlert('Removed Successfully', 'info');
     }
