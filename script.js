@@ -4,15 +4,37 @@ const author = document.getElementById('author');
 const isbn = document.getElementById('isbn');
 const form = document.getElementById('form-book');
 const tbody = document.getElementById('tbody');
-//Book Constructor
+
+//--------------Book Constructor
 function Book(title, author, isbn) {
     this.title = title;
     this.author = author
     this.isbn = isbn;
 }
 
-//UI constructor
-function UI() {}
+//--------------localStorage constructor
+
+function SaveLocal() {};
+
+//saveLocal() methods:
+
+SaveLocal.prototype.saveDataOnLocalStorage = function(arrofObject) {
+    localStorage.setItem('books', JSON.stringify(arrofObject));
+}
+SaveLocal.prototype.getDataFromLocalStorage = function(key) {
+    if (localStorage.getItem(key) !== null) {
+        console.log(JSON.parse(localStorage.getItem(key)));
+        return JSON.parse(localStorage.getItem(key));
+    } else {
+        return []
+    }
+}
+let savelocal = new SaveLocal();
+const bookList = savelocal.getDataFromLocalStorage('books');
+
+
+//--------------UI constructor
+function UI() {};
 
 //UI() methods:
 
@@ -66,8 +88,15 @@ form.addEventListener('submit', function(e) {
     let book = new Book(title.value, author.value, isbn.value);
     //instanciate ui
     let ui = new UI();
+    //instanciate saveLocal for localStorage
+    let savelocal = new SaveLocal();
+
 
     if (title.value !== '' && author.value !== '' && isbn.value !== '') {
+
+        //first lets save it locallly
+        bookList.push(book);
+        savelocal.saveDataOnLocalStorage(bookList);
         //add book to user interface
         ui.addBoook(book);
         ui.clearFields();
@@ -80,10 +109,7 @@ form.addEventListener('submit', function(e) {
 
 tbody.addEventListener('click', function(e) {
     if (e.target.classList.contains('btn-remove')) {
-
         let ui = new UI();
-
-
         ui.removeElement(e.target);
         ui.showAlert('Removed Successfully', 'info');
     }
