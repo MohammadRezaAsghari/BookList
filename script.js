@@ -1,4 +1,4 @@
-//global values;
+//-------------------------------------------------------------Golbal variables
 const title = document.getElementById('title');
 const author = document.getElementById('author');
 const isbn = document.getElementById('isbn');
@@ -12,11 +12,9 @@ function Book(title, author, isbn) {
     this.isbn = isbn;
 }
 
-//--------------localStorage constructor
+//-----------------------------------------------------------localStorage constructor
 
 function SaveLocal() {};
-
-//--------------saveLocal() methods:
 
 //saveDataOnLocalStorage()
 SaveLocal.prototype.saveDataOnLocalStorage = function(arrofObject) {
@@ -36,8 +34,11 @@ SaveLocal.prototype.getDataFromLocalStorage = function(key) {
 SaveLocal.prototype.removeDataFromLocalStorage = function(node , savelocal) {
 
     bookList.forEach(function (item , indx) {
-        if(item.title === node.firstChild.textContent){
+        
+        if(item.title === node.firstElementChild.textContent){
+            
             bookList.splice(indx , 1);
+           
             savelocal.saveDataOnLocalStorage(bookList);
         }
     });
@@ -61,10 +62,8 @@ const bookList = savelocal.getDataFromLocalStorage('books');
 savelocal.renderElementsFromLocal(bookList);
 
 
-//--------------UI constructor
+//-------------------------------------------------------------UI Constructor
 function UI() {};
-
-//--------------UI methods:
 
 //addbook()
 UI.prototype.addBoook = function(book) {
@@ -97,7 +96,7 @@ UI.prototype.showAlert = function(msg, alertType) {
 }
 //removeElement function
 UI.prototype.removeElement = function(target) {
-    console.log('inside timeout')
+    
     target.parentElement.classList.add('hoverAnimated');
     setTimeout(function() {
         target.parentElement.remove();
@@ -106,7 +105,7 @@ UI.prototype.removeElement = function(target) {
 }
 
 
-//Event Listenres
+//-------------------------------------------------------------------Event Listeners
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -135,8 +134,11 @@ form.addEventListener('submit', function(e) {
 
 tbody.addEventListener('click', function(e) {
     if (e.target.classList.contains('btn-remove')) {
+        //istanciate
         let ui = new UI();
         let savelocal = new SaveLocal();
+
+
         savelocal.removeDataFromLocalStorage(e.target.parentElement , savelocal);
         ui.removeElement(e.target);
         ui.showAlert('Removed Successfully', 'info');
